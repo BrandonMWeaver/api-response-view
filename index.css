@@ -39,6 +39,7 @@ body {
 
     font-family: monospace;
     font-size: 15px;
+    font-weight: bold;
     color: #fff;
     background-color: #37379b;
     border-top-right-radius: 15px;
@@ -54,4 +55,39 @@ body {
 
 .request-bar button:active {
     background-color: #fff;
+}
+
+.response-view {
+    overflow: scroll;
+    margin: 10px auto;
+    padding: 10px;
+    width: calc(50% - 20px);
+    height: calc(100vh - 80px);
+    background-color: #9b9b9b;
+    border-radius: 15px;
+}
+
+.response-view::-webkit-scrollbar {
+    display: none;
+}
+
+.response-view .item {
+    margin: 10px 0 0 0;
+    padding: 0;
+    width: 100%;
+}
+
+.response-view .item:first-child {
+    margin: 0;
+}
+
+.item p {
+    margin: 0;
+    padding: 10px;
+    font-family: monospace;
+    font-size: 15px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #37379b;
+    border-radius: 15px;
 }

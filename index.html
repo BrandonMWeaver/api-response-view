@@ -11,17 +11,34 @@
             <input type="text" />
             <button>Request</button>
         </div>
+        <div class="response-view"></div>
         <script>
             const requestInput = document.querySelector(".request-bar input");
 
             const requestButton = document.querySelector(".request-bar button");
             requestButton.style.transition = "background-color 0.25s";
 
+            const responseView = document.querySelector(".response-view");
+
+            const buildResponseView = struct => {
+                for (key in struct) {
+                    const item = document.createElement("div");
+                    item.className = "item";
+
+                    const p = document.createElement("p");
+                    p.innerText = `${key}: ${struct[key]}`;
+
+                    item.append(p);
+                    responseView.append(item);
+                }
+            }
+
             const getResponse = url => {
                 fetch(url)
                 .then(r => r.json())
                 .then(json => {
-                    console.log(json);
+                    buildResponseView(json);
+                    requestInput.value = '';
                 })
                 .catch(e => console.log(e));
             }
