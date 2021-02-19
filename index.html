@@ -16,6 +16,19 @@
 
             const requestButton = document.querySelector(".request-bar button");
             requestButton.style.transition = "background-color 0.25s";
+
+            const getResponse = url => {
+                fetch(url)
+                .then(r => r.json())
+                .then(json => {
+                    console.log(json);
+                })
+                .catch(e => console.log(e));
+            }
+
+            requestButton.addEventListener("click", () => {
+                getResponse(requestInput.value);
+            });
         </script>
     </body>
 </html>
