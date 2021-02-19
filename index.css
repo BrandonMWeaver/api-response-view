@@ -2,3 +2,56 @@ html, body {
     margin: 0;
     padding: 0;
 }
+
+body {
+    background-color: #050505;
+}
+
+.request-bar {
+    margin: 10px auto 0 auto;
+    width: 50%;
+    height: 30px;
+}
+
+.request-bar input {
+    float: left;
+    margin: 0;
+    padding: 0 0 0 10px;
+    width: calc(75% - 5px);
+    height: 100%;
+
+    font-family: monospace;
+    font-size: 15px;
+    color: #050505;
+    background-color: #fff;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    outline: none;
+    border: none;
+}
+
+.request-bar button {
+    float: left;
+    margin: 0 0 0 10px;
+    padding: 0;
+    width: calc(25% - 5px);
+    height: 100%;
+
+    font-family: monospace;
+    font-size: 15px;
+    color: #fff;
+    background-color: #37379b;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    outline: none;
+    border: none;
+}
+
+.request-bar button:hover {
+    cursor: pointer;
+    background-color: #6969cd;
+}
+
+.request-bar button:active {
+    background-color: #fff;
+}

@@ -7,6 +7,15 @@
         <title>Document</title>
     </head>
     <body>
+        <div class="request-bar">
+            <input type="text" />
+            <button>Request</button>
+        </div>
+        <script>
+            const requestInput = document.querySelector(".request-bar input");
 
+            const requestButton = document.querySelector(".request-bar button");
+            requestButton.style.transition = "background-color 0.25s";
+        </script>
     </body>
 </html>
