@@ -20,16 +20,92 @@
 
             const responseView = document.querySelector(".response-view");
 
+            let response;
+
             const buildResponseView = struct => {
-                for (key in struct) {
-                    const item = document.createElement("div");
-                    item.className = "item";
+                responseView.innerHTML = '';
 
-                    const p = document.createElement("p");
-                    p.innerText = `${key}: ${struct[key]}`;
+                if (struct instanceof Array) {
+                    for (let i = 0; i < struct.length; i++) {
+                        const element = struct[i];
 
-                    item.append(p);
-                    responseView.append(item);
+                        const item = document.createElement("div");
+                        item.className = "item";
+
+                        const p = document.createElement("p");
+                        p.innerText = `${i}: `;
+
+                        if (element instanceof Array) {
+                            p.innerText += `[${element.length > 0 ? "..." : ''}]`;
+
+                            const button = document.createElement("button");
+                            button.style.transition = "background-color 0.25s";
+                            button.innerText = "View";
+                            button.onclick = () => {
+                                buildResponseView(element);
+                            }
+
+                            p.append(button);
+                        }
+                        else if (element instanceof Object) {
+                            p.innerText += `{${Object.keys(element).length > 0 ? "..." : ''}}`;
+
+                            const button = document.createElement("button");
+                            button.style.transition = "background-color 0.25s";
+                            button.innerText = "View";
+                            button.onclick = () => {
+                                buildResponseView(element);
+                            }
+
+                            p.append(button);
+                        }
+                        else {
+                            p.innerText += element;
+                        }
+
+                        item.append(p)
+                        responseView.append(item);
+                    }
+                }
+                else {
+                    for (const key in struct) {
+                        const item = document.createElement("div");
+                        item.className = "item";
+
+                        const p = document.createElement("p");
+                        p.innerText = `${key}: `;
+
+                        if (struct[key] instanceof Array) {
+                            p.innerText += `[${struct[key].length > 0 ? "..." : ''}]`;
+
+                            const button = document.createElement("button");
+                            button.style.transition = "background-color 0.25s";
+                            button.innerText = "View";
+                            button.onclick = () => {
+                                buildResponseView(struct[key]);
+                            }
+
+                            p.append(button);
+                        }
+                        else if (struct[key] instanceof Object) {
+                            p.innerText += `{${Object.keys(struct[key]).length > 0 ? "..." : ''}}`;
+
+                            const button = document.createElement("button");
+                            button.style.transition = "background-color 0.25s";
+                            button.innerText = "View";
+                            button.onclick = () => {
+                                buildResponseView(struct[key]);
+                            }
+
+                            p.append(button);
+                        }
+                        else {
+                            p.innerText += struct[key];
+                        }
+
+                        item.append(p);
+                        responseView.append(item);
+                    }
                 }
             }
 
@@ -37,7 +113,8 @@
                 fetch(url)
                 .then(r => r.json())
                 .then(json => {
-                    buildResponseView(json);
+                    response = json;
+                    buildResponseView(response);
                     requestInput.value = '';
                 })
                 .catch(e => console.log(e));

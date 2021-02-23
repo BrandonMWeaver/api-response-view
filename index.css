@@ -91,3 +91,26 @@ body {
     background-color: #37379b;
     border-radius: 15px;
 }
+
+.response-view button {
+    margin: 0;
+    padding: 0 10px;
+    float: right;
+    font-family: monospace;
+    font-size: 15px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #6969cd;
+    border-radius: 15px;
+    outline: none;
+    border: none;
+}
+
+.response-view button:hover {
+    cursor: pointer;
+    background-color: #9b9bff;
+}
+
+.response-view button:active {
+    background-color: #fff;
+}
