@@ -13,6 +13,13 @@
         </div>
         <div class="response-view"></div>
         <script>
+            class LinkedStruct {
+                constructor(value, parent = null) {
+                    this.value = value;
+                    this.parent = parent;
+                }
+            }
+
             const requestInput = document.querySelector(".request-bar input");
 
             const requestButton = document.querySelector(".request-bar button");
@@ -25,9 +32,22 @@
             const buildResponseView = struct => {
                 responseView.innerHTML = '';
 
-                if (struct instanceof Array) {
-                    for (let i = 0; i < struct.length; i++) {
-                        const element = struct[i];
+                if (struct.value !== response) {
+                    const returnButton = document.createElement("button");
+                    returnButton.style.float = "none";
+                    returnButton.style.padding = "10px";
+                    returnButton.style.transition = "background-color 0.25s";
+                    returnButton.innerText = "Return";
+                    returnButton.onclick = () => {
+                        buildResponseView(struct.parent);
+                    }
+
+                    responseView.append(returnButton);
+                }
+
+                if (struct.value instanceof Array) {
+                    for (let i = 0; i < struct.value.length; i++) {
+                        const element = struct.value[i];
 
                         const item = document.createElement("div");
                         item.className = "item";
@@ -42,7 +62,7 @@
                             button.style.transition = "background-color 0.25s";
                             button.innerText = "View";
                             button.onclick = () => {
-                                buildResponseView(element);
+                                buildResponseView(new LinkedStruct(element, struct));
                             }
 
                             p.append(button);
@@ -54,7 +74,7 @@
                             button.style.transition = "background-color 0.25s";
                             button.innerText = "View";
                             button.onclick = () => {
-                                buildResponseView(element);
+                                buildResponseView(new LinkedStruct(element, struct));
                             }
 
                             p.append(button);
@@ -68,39 +88,39 @@
                     }
                 }
                 else {
-                    for (const key in struct) {
+                    for (const key in struct.value) {
                         const item = document.createElement("div");
                         item.className = "item";
 
                         const p = document.createElement("p");
                         p.innerText = `${key}: `;
 
-                        if (struct[key] instanceof Array) {
-                            p.innerText += `[${struct[key].length > 0 ? "..." : ''}]`;
+                        if (struct.value[key] instanceof Array) {
+                            p.innerText += `[${struct.value[key].length > 0 ? "..." : ''}]`;
 
                             const button = document.createElement("button");
                             button.style.transition = "background-color 0.25s";
                             button.innerText = "View";
                             button.onclick = () => {
-                                buildResponseView(struct[key]);
+                                buildResponseView(new LinkedStruct(struct.value[key], struct));
                             }
 
                             p.append(button);
                         }
-                        else if (struct[key] instanceof Object) {
-                            p.innerText += `{${Object.keys(struct[key]).length > 0 ? "..." : ''}}`;
+                        else if (struct.value[key] instanceof Object) {
+                            p.innerText += `{${Object.keys(struct.value[key]).length > 0 ? "..." : ''}}`;
 
                             const button = document.createElement("button");
                             button.style.transition = "background-color 0.25s";
                             button.innerText = "View";
                             button.onclick = () => {
-                                buildResponseView(struct[key]);
+                                buildResponseView(new LinkedStruct(struct.value[key], struct));
                             }
 
                             p.append(button);
                         }
                         else {
-                            p.innerText += struct[key];
+                            p.innerText += struct.value[key];
                         }
 
                         item.append(p);
@@ -114,7 +134,7 @@
                 .then(r => r.json())
                 .then(json => {
                     response = json;
-                    buildResponseView(response);
+                    buildResponseView(new LinkedStruct(json));
                     requestInput.value = '';
                 })
                 .catch(e => console.log(e));
