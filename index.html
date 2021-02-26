@@ -46,35 +46,35 @@
                         const p = document.createElement("p");
                         p.innerText = `${i}: `;
 
+                        let button = null;
+
                         if (element instanceof Array) {
                             p.innerText += `[${element.length > 0 ? "..." : ''}]`;
 
-                            const button = document.createElement("button");
+                            button = document.createElement("button");
                             button.style.transition = "background-color 0.25s";
-                            button.innerText = "View";
                             button.onclick = () => {
                                 buildResponseView(new LinkedStruct(element, struct));
                             }
 
-                            p.append(button);
+                            button.append(p);
                         }
                         else if (element instanceof Object) {
                             p.innerText += `{${Object.keys(element).length > 0 ? "..." : ''}}`;
 
-                            const button = document.createElement("button");
+                            button = document.createElement("button");
                             button.style.transition = "background-color 0.25s";
-                            button.innerText = "View";
                             button.onclick = () => {
                                 buildResponseView(new LinkedStruct(element, struct));
                             }
 
-                            p.append(button);
+                            button.append(p);
                         }
                         else {
                             p.innerText += element;
                         }
 
-                        item.append(p)
+                        item.append(button ? button : p);
                         responseView.append(item);
                     }
                 }
@@ -86,35 +86,35 @@
                         const p = document.createElement("p");
                         p.innerText = `${key}: `;
 
+                        let button = null;
+
                         if (struct.value[key] instanceof Array) {
                             p.innerText += `[${struct.value[key].length > 0 ? "..." : ''}]`;
 
-                            const button = document.createElement("button");
+                            button = document.createElement("button");
                             button.style.transition = "background-color 0.25s";
-                            button.innerText = "View";
                             button.onclick = () => {
                                 buildResponseView(new LinkedStruct(struct.value[key], struct));
                             }
 
-                            p.append(button);
+                            button.append(p);
                         }
                         else if (struct.value[key] instanceof Object) {
                             p.innerText += `{${Object.keys(struct.value[key]).length > 0 ? "..." : ''}}`;
 
-                            const button = document.createElement("button");
+                            button = document.createElement("button");
                             button.style.transition = "background-color 0.25s";
-                            button.innerText = "View";
                             button.onclick = () => {
                                 buildResponseView(new LinkedStruct(struct.value[key], struct));
                             }
 
-                            p.append(button);
+                            button.append(p);
                         }
                         else {
                             p.innerText += struct.value[key];
                         }
 
-                        item.append(p);
+                        item.append(button ? button : p);
                         responseView.append(item);
                     }
                 }
