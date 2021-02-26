@@ -33,16 +33,7 @@
                 responseView.innerHTML = '';
 
                 if (struct.value !== response) {
-                    const returnButton = document.createElement("button");
-                    returnButton.style.float = "none";
-                    returnButton.style.padding = "10px";
-                    returnButton.style.transition = "background-color 0.25s";
-                    returnButton.innerText = "Return";
-                    returnButton.onclick = () => {
-                        buildResponseView(struct.parent);
-                    }
-
-                    responseView.append(returnButton);
+                    buildReturnButtonTo(struct.parent);
                 }
 
                 if (struct.value instanceof Array) {
@@ -127,6 +118,20 @@
                         responseView.append(item);
                     }
                 }
+            }
+
+            const buildReturnButtonTo = struct => {
+                const returnButton = document.createElement("button");
+                returnButton.style.float = "none";
+                returnButton.style.padding = "10px";
+                returnButton.style.transition = "background-color 0.25s";
+                returnButton.innerText = struct.value instanceof Array ? "[...]" : "{...}";
+
+                returnButton.onclick = () => {
+                    buildResponseView(struct);
+                }
+
+                responseView.append(returnButton);
             }
 
             const getResponse = url => {
